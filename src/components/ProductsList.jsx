@@ -1,31 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import SearchBar from "./Searchbar";
+import SearchBar from "./SearchBar";
 
 const ProductsList = () => {
     const [apiData, setApiData] = useState([]);
     const [error, setError] = useState('');
-    const [searchTerm, setSearchTerm] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
-
-    useEffect(() => {
-        axios
-        .get("https://dummyjson.com/products")
-          .then((res) => {
-            setApiData(res.data.products);
+    // Import at render
+    // useEffect(() => {
+      // axios
+      // .get("https://dummyjson.com/products")
+        // .then((res) => {
+          // setApiData(res.data.products);
           
-          })
-          .catch((error) => setError(error.message)); // Set error message
+        // })
+        // .catch((error) => setError(error.message)); // Set error message
+    // }, []);
 
-          axios
-          .get(`https://dummyjson.com/products/search?q=${searchTerm}`)
-            .then((res) => {
-              setSearchTerm(res.data.products);
-            //   console.log(res.data.products); // Log the entire response data
-            })
-            .catch((error) => setError(error.message)); // Set error message
+    // Import at searchterm changes
+    useEffect(() => {
+      if (searchTerm) {
+ 
+        axios
+        .get(`https://dummyjson.com/products/search?q=${searchTerm}`)
+        .then((res) => {
+          setApiData(res.data.products);
+        })
+        .catch((error) => setError(error.message)); // Set error message
+      }
       }, [searchTerm]);
+
 
       // Function to handle search
   const handleSearch = (term) => {
@@ -35,19 +41,23 @@ const ProductsList = () => {
     return (
       <div>
         <h1>This is the Product List</h1>
-        <SearchBar onSearch={handleSearch} />
-        {apiData.products?.map(product => (
+        <SearchBar handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+        {apiData?.map(product => (
           <div key={product.id}>
             {/* Rendering product details using map*/}
-            <h2>{product.brand}</h2>
-            <p>{product.category}</p>
-            <p>{product.images}</p>
-            <p>{product.discountPercentage}</p>
-            <p>Price: ${product.price}</p>
-            <p>{product.ratings}</p>
-            <p>{product.thumbnail}</p>
-            <p>{product.title}</p>
-            <Link to={`/products/${product.id}`}>Click for More</Link>
+            <h2>{product?.brand}</h2>
+            <p>{product?.category}</p>
+            <p>Discount:${product?.discountPercentage}</p>
+            <p>Price: ${product?.price}</p>
+            <p>{product?.ratings}</p>
+            {/* <p>{product?.thumbnail}</p> */}
+            <p>Product Name: {product?.title}</p>
+            <div className="image-container">
+            {product.images.map((imageUrl, index) => (
+                <img key={index} src={imageUrl} alt={`Product ${product.id} - Image ${index + 1}`} />
+              ))}
+            </div>
+            <Link to={`/products/${product?.id}`}>Click for More</Link>
             {/* Add more product details as needed */}
           </div>
         ))}

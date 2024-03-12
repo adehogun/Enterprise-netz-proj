@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
 
-const SearchBar = ({onSearch}) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchBar = ({handleSearch,setSearchTerm ,searchTerm}) => {
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -9,7 +7,7 @@ const SearchBar = ({onSearch}) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault(); // Prevent form submission
-    onSearch(searchTerm);
+    handleSearch(searchTerm);
   };
     
   return (
