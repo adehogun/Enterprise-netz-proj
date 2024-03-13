@@ -7,7 +7,7 @@ const ProductDetails = ()=> {
 
     useEffect(() => {
         axios
-        .get(`https://dummyjson.com/products/${productId}`)
+        .get(`https://dummyjson.com/products/${productId}?limit=10&skip=10&select=title,price`)
           .then((res) => {
             setProductDetails(res.data);
             console.log(res.data); // Log the entire response data

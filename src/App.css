@@ -1,9 +1,18 @@
+/* src/styles.css */
 #root {
-  max-width: 1280px;
+  max-width: 1700px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
+
+main {
+  display: flex;
+width: 1000px;
+padding: 12px;
+margin-top: 124px;
+}
+
 
 .logo {
   height: 6em;

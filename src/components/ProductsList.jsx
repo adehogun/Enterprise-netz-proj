@@ -1,67 +1,51 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import SearchBar from "../components/SearchBar";
 
 const ProductsList = () => {
     const [apiData, setApiData] = useState([]);
     const [error, setError] = useState('');
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Import at render
-    // useEffect(() => {
-      // axios
-      // .get("https://dummyjson.com/products")
-        // .then((res) => {
-          // setApiData(res.data.products);
-          
-        // })
-        // .catch((error) => setError(error.message)); // Set error message
-    // }, []);
-
-    // Import at searchterm changes
     useEffect(() => {
-      if (searchTerm) {
- 
-        axios
-        .get(`https://dummyjson.com/products/search?q=${searchTerm}`)
-        .then((res) => {
-          setApiData(res.data.products);
-        })
-        .catch((error) => setError(error.message)); // Set error message
-      }
-      }, [searchTerm]);
+        if (searchTerm) {
+            axios
+                .get(`https://dummyjson.com/products/search?q=${searchTerm}`)
+                .then((res) => {
+                    setApiData(res.data.products.slice(0, 2)); // Limit to first 4 items
+                })
+                .catch((error) => setError(error.message)); // Set error message
+        }
+    }, [searchTerm]);
 
-
-      // Function to handle search
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
+    // Function to handle search
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+    };
 
     return (
-      <div>
-        <h1>This is the Product List</h1>
-        <SearchBar handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-        {apiData?.map(product => (
-          <div key={product.id}>
-            {/* Rendering product details using map*/}
-            <h2>{product?.brand}</h2>
-            <p>{product?.category}</p>
-            <p>Discount:${product?.discountPercentage}</p>
-            <p>Price: ${product?.price}</p>
-            <p>{product?.ratings}</p>
-            {/* <p>{product?.thumbnail}</p> */}
-            <p>Product Name: {product?.title}</p>
-            <div className="image-container">
-            {product.images.map((imageUrl, index) => (
-                <img key={index} src={imageUrl} alt={`Product ${product.id} - Image ${index + 1}`} />
-              ))}
-            </div>
-            <Link to={`/products/${product?.id}`}>Click for More</Link>
-            {/* Add more product details as needed */}
-          </div>
-        ))}
-      </div>
+        <div className="prod">
+            <h1 className="text-2xl font-bold mb-4">This is the Product List</h1>
+            <SearchBar handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+            {apiData?.map(product => (
+                <div key={product.id} className="mb-6">
+                    <h2 className="text-xl font-bold underline mb-2">{product?.brand}</h2>
+                    <p className="text-lg font-medium mb-2">{product?.category}</p>
+                    <p className="mb-2">Discount: ${product?.discountPercentage}</p>
+                    <p className="mb-2">Price: ${product?.price}</p>
+                    <p className="mb-2">{product?.ratings}</p>
+                    <p className="mb-2">Product Name: {product?.title}</p>
+                    <div className="flex justify-center flex-wrap">
+                        {product.images.slice(0, 1).map((imageUrl, index) => (
+                            <img key={index} src={imageUrl} alt={`Product ${product.id} - Image ${index + 1}`} className="w-48 h-48 object-contain mb-2" />
+                        ))}
+                    </div>
+                    <Link to={`/checkout/${product?.id}`} className="block mt-2 text-blue-500 hover:underline">Buy</Link>
+                    {/* Add more product details as needed */}
+                </div>
+            ))}
+        </div>
     );
 }
 
