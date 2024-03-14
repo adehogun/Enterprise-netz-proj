@@ -1,4 +1,4 @@
-
+import { BsSearch } from "react-icons/bs";
 
 const SearchBar = ({handleSearch,setSearchTerm ,searchTerm}) => {
 
@@ -12,16 +12,23 @@ const SearchBar = ({handleSearch,setSearchTerm ,searchTerm}) => {
   };
     
   return (
-    <div className="mb-3 md:w-96">
-    <form className="relative mb-4 flex w-full flex-wrap items-stretch" onSubmit={handleSearchSubmit}>
-      <input
-        type="search" 
-        className="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+    <div className="sticky top-0 bg-white z-10">
+    <form className="container hidden lg:block" onSubmit={handleSearchSubmit}>
+      <div className="flex justify-between items-center p-8">
+      <h1 className="text-4xl font-medium"></h1>
+      <div className="relative w-full max-w-[500px]">
+
+  
+      <input className="bg-[#f2f3f5] border-none outline-none px-6 py-3 rounded-[30px] w-full" type="text"
         value={searchTerm}
         onChange={handleInputChange}
         placeholder="Search products..."
       />
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"  type="submit">Search</button>
+      
+       </div>
+       <BsSearch className="absolute top-8 right-0 mt-4 mr-5 text-gray-500 "  size={20} />
+      {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"  type="submit">Search</button> */}
+      </div>
     </form>
 </div>
   );
