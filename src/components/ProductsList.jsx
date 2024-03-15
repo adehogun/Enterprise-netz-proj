@@ -13,7 +13,7 @@ const ProductsList = () => {
             axios
                 .get(`https://dummyjson.com/products/search?q=${searchTerm}`)
                 .then((res) => {
-                    setApiData(res.data.products.slice(0, 2)); // Limit to first 4 items
+                    setApiData(res.data.products.slice(0, 1)); // Limit to first 4 items
                 })
                 .catch((error) => setError(error.message)); // Set error message
         }
@@ -26,7 +26,6 @@ const ProductsList = () => {
 
     return (
         <div className="prod">
-            <h1 className="text-2xl font-bold mb-4">This is the Product List</h1>
             <SearchBar handleSearch={handleSearch} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
             {apiData?.map(product => (
                 <div key={product.id} className="mb-6">
@@ -37,8 +36,8 @@ const ProductsList = () => {
                     <p className="mb-2">{product?.ratings}</p>
                     <p className="mb-2">Product Name: {product?.title}</p>
                     <div className="flex justify-center flex-wrap">
-                        {product.images.slice(0, 1).map((imageUrl, index) => (
-                            <img key={index} src={imageUrl} alt={`Product ${product.id} - Image ${index + 1}`} className="w-48 h-48 object-contain mb-2" />
+                        {product.images.slice(0,1).map((imageUrl, index) => (
+                            <img key={index} src={imageUrl} alt={`Product ${product.id} - Image ${index + 1}`} className="h-25 w-25 object-cover rounded-lg" />
                         ))}
                     </div>
                     <Link to={`/checkout/${product?.id}`} className="block mt-2 text-blue-500 hover:underline">Buy</Link>

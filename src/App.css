@@ -6,12 +6,6 @@
   text-align: center;
 }
 
-main {
-  display: flex;
-width: 1000px;
-padding: 12px;
-margin-top: 124px;
-}
 
 
 .logo {
@@ -49,3 +43,4 @@ margin-top: 124px;
 .read-the-docs {
   color: #888;
 }
+

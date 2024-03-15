@@ -12,13 +12,13 @@ const Navbar =() => {
                 <div className="flex justify-between items-center p-8">
                     <h1 className="text-4xl font-medium">Logo</h1>
                   
-                    <div className="flex gap-7">
+                    <div className="flex gap-10">
                         <div className="icon_wrapper">
-                            <AiOutlineUser size="w-[25px] h-25px]"/>
+                            <AiOutlineUser size="w-[15px] h-27px]"/>
                         </div>
                         <div className="relative cursor-pointer">
-                            <AiOutlineShoppingCart/>
-                            <CartCountBadge size="w-[35px] h-25px]"/>
+                        <AiOutlineShoppingCart size={50} className="text-gray-600" />
+                        <CartCountBadge count={5} className="absolute top-0 right-0 -mt-1 -mr-1"/>
                         </div>
 
                     </div>
